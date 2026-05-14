@@ -1,3 +1,5 @@
+using CalorieTracker.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -19,5 +21,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+await DatabaseInitializer.InitializeAsync(app.Services); //додао DatabaseInitializer
 
 app.Run();
