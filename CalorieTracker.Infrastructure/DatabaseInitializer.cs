@@ -1,6 +1,8 @@
 ﻿using CalorieTracker.Infrastructure.Data;
+using CalorieTracker.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -21,7 +23,27 @@ namespace CalorieTracker.Infrastructure
 
             string[] roles = { "Admin", "User" };
             foreach (var role in roles)
-                await roleManager.CreateAsync(new IdentityRole(role));
+            {
+                if(!await roleManager.RoleExistsAsync(role)) await roleManager.CreateAsync(new IdentityRole(role));
+            }
+
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+
+            var adminEmail = config["AdminSeed:Email"];
+            var adminPassword = config["AdminSeed:Password"];
+
+            if (await userManager.FindByEmailAsync(adminEmail!) == null)
+            {
+                var admin = new ApplicationUser
+                {
+                    Email = adminEmail,
+                    UserName = adminEmail
+                };
+
+                await userManager.CreateAsync(admin, adminPassword!);
+                await userManager.AddToRoleAsync(admin, "Admin");
+            }
         }
     }
 }

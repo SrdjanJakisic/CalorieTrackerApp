@@ -10,6 +10,6 @@ namespace CalorieTracker.Application.Interfaces.Services
         Task RegisterAsync(RegisterDto dto);
         Task<AuthResponseDto> LoginAsync(LoginDto dto);
         Task<AuthResponseDto> RefreshAsync(string refreshToken);
-        Task revokeAsync(string userId);
+        Task RevokeAsync(string userId);
     }
 }

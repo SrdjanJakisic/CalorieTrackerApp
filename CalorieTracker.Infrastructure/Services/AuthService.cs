@@ -115,7 +115,7 @@ namespace CalorieTracker.Infrastructure.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task revokeAsync(string userId)
+        public async Task RevokeAsync(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
 
