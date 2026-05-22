@@ -1,5 +1,6 @@
 ﻿using CalorieTracker.Infrastructure.Data;
 using CalorieTracker.Infrastructure.Identity;
+using CalorieTracker.Infrastructure.Seed;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -44,6 +45,8 @@ namespace CalorieTracker.Infrastructure
                 await userManager.CreateAsync(admin, adminPassword!);
                 await userManager.AddToRoleAsync(admin, "Admin");
             }
+
+            await DataSeeder.SeedFoodDataAsync(serviceProvider);
         }
     }
 }

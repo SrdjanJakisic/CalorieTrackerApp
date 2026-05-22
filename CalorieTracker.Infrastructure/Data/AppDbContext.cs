@@ -12,6 +12,9 @@ namespace CalorieTracker.Infrastructure.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
         public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<FoodCategory> FoodCategories { get; set; }
+        public DbSet<FoodItem> FoodItems { get; set; }
+        public DbSet<FoodSuggestion> FoodSuggestions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,6 +24,21 @@ namespace CalorieTracker.Infrastructure.Data
                 .HasOne<ApplicationUser>()
                 .WithOne()
                 .HasForeignKey<UserProfile>(p => p.UserId);
+
+            modelBuilder.Entity<FoodItem>()
+                .HasOne(x => x.Category)
+                .WithMany(x => x.Items)
+                .HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<FoodItem>()
+                .HasIndex(x => new { x.Name, x.Manufacturer })
+                .IsUnique();
+
+            modelBuilder.Entity<FoodSuggestion>()
+                .HasOne<ApplicationUser>()
+                .WithMany()
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

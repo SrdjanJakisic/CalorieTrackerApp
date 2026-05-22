@@ -8,7 +8,7 @@ namespace CalorieTracker.Domain.Interfaces.Repositories
     public interface IFoodCategoryRepository
     {
         Task<IEnumerable<FoodCategory>> GetAllAsync();
-        Task<FoodCategory> GetByIdAsync();
+        Task<FoodCategory?> GetByIdAsync(int id);
         Task CreateAsync(FoodCategory category);
         Task UpdateAsync(FoodCategory category);
         Task DeleteAsync(FoodCategory category);
