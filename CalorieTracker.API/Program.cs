@@ -56,6 +56,9 @@ builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+builder.Services.AddScoped<IFoodCategoryRepository, FoodCategoryRepository>();
+builder.Services.AddScoped<IFoodItemRepository, FoodItemRepository>();
+builder.Services.AddScoped<IFoodSuggestionRepository, FoodSuggestionRepository>();
 
 //Swagger
 builder.Services.AddEndpointsApiExplorer();

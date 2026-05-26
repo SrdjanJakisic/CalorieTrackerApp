@@ -22,4 +22,10 @@
     <ProjectReference Include="..\CalorieTracker.Infrastructure\CalorieTracker.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="database.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
