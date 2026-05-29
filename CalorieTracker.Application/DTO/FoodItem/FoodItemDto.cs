@@ -15,7 +15,7 @@ namespace CalorieTracker.Application.DTO.FoodItem
         public float ProteinPer100g { get; set; }
         public float CarbsPer100g { get; set; }
         public float FatPer100g { get; set; }
-        public bool IsLentent { get; set; }
+        public bool IsLenten { get; set; }
         public bool IsApproved { get; set; }
         public string? AdditionalInfo { get; set; }
         public string? Source { get; set; }

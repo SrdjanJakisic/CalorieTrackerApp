@@ -4,9 +4,9 @@ using System.Text;
 
 namespace CalorieTracker.Application.DTO.FoodItem
 {
-    public class CreateFoodItem
+    public class CreateFoodItemDto
     {
-        public int Id { get; set; }
+        public int CategoryId { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Manufacturer { get; set; } = string.Empty;
         public float CaloriesPer100g { get; set; }

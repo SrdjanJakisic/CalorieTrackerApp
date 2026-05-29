@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CalorieTracker.Application.DTO.FoodSuggestion
 {
-    public class CreateFoodSuggestion
+    public class CreateFoodSuggestionDto
     {
         public string Name { get; set; } = string.Empty;
         public string Manufacturer { get; set; } = string.Empty;

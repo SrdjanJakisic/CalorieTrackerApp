@@ -1,0 +1,103 @@
+﻿using CalorieTracker.Application.DTO.FoodSuggestion;
+using CalorieTracker.Application.Interfaces.Services;
+using CalorieTracker.Domain.Entities;
+using CalorieTracker.Domain.Enums;
+using CalorieTracker.Domain.Interfaces;
+using CalorieTracker.Domain.Interfaces.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace CalorieTracker.Application.Services
+{
+    public class FoodSuggestionService : IFoodSuggestionService
+    {
+        private readonly IUnitOfWork _unitOfWork;
+        public FoodSuggestionService(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+        public async Task ApproveAsync(int id)
+        {
+            var suggestion = await _unitOfWork.FoodSuggestions.GetByIdAsync(id)
+                ?? throw new KeyNotFoundException("Предлог не постоји!");
+
+            suggestion.Status = SuggestionStatus.Approved;
+            await _unitOfWork.FoodSuggestions.UpdateAsync(suggestion);
+
+            var item = new FoodItem
+            {
+                CategoryId = suggestion.CategoryId,
+                Name = suggestion.Name,
+                Manufacturer = suggestion.Manufacturer,
+                CaloriesPer100g = suggestion.CaloriesPer100g,
+                ProteinPer100g = suggestion.ProteinPer100g,
+                CarbsPer100g = suggestion.CarbsPer100g,
+                FatPer100g = suggestion.FatPer100g,
+                IsLenten = suggestion.IsLenten,
+                IsApproved = true
+            };
+
+            await _unitOfWork.FoodItems.CreateAsync(item);
+            await _unitOfWork.SaveChangesAsync();
+        }
+        public async Task CreateAsync(string userId, CreateFoodSuggestionDto dto)
+        {
+            if (await _unitOfWork.FoodSuggestions.ExistsAsync(dto.Name, dto.Manufacturer))
+                throw new ArgumentException("Предлог за ову намирницу већ постоји!");
+
+            var suggestion = new FoodSuggestion
+            {
+                UserId = userId,
+                Name = dto.Name,
+                Manufacturer = dto.Manufacturer,
+                CategoryId = dto.CategoryId,
+                CaloriesPer100g = dto.CaloriesPer100g,
+                ProteinPer100g = dto.ProteinPer100g,
+                CarbsPer100g = dto.CarbsPer100g,
+                FatPer100g = dto.FatPer100g,
+                IsLenten = dto.IsLenten,
+                Status = SuggestionStatus.Pending,
+                AdminNote = null
+            };
+
+            await _unitOfWork.FoodSuggestions.CreateAsync(suggestion);
+            await _unitOfWork.SaveChangesAsync();
+        }
+        public async Task<IEnumerable<FoodSuggestionDto>> GetAllAsync(SuggestionStatus status)
+        {
+            var suggestion = await _unitOfWork.FoodSuggestions.GetAllAsync(status);
+            return suggestion.Select(x => MapToDto(x));
+
+        }
+        public async Task RejectAsync(int id, string? adminNote)
+        {
+            var suggestion = await _unitOfWork.FoodSuggestions.GetByIdAsync(id)
+                ?? throw new KeyNotFoundException("Предлог не постоји!");
+
+            suggestion.Status = SuggestionStatus.Rejected;
+            suggestion.AdminNote = adminNote;
+
+            await _unitOfWork.FoodSuggestions.UpdateAsync(suggestion);
+            await _unitOfWork.SaveChangesAsync();
+        }
+        private FoodSuggestionDto MapToDto(FoodSuggestion dto)
+        {
+            return new FoodSuggestionDto
+            {
+                Id = dto.Id,
+                UserId = dto.UserId,
+                Name = dto.Name,
+                Manufacturer = dto.Manufacturer,
+                CategoryId = dto.CategoryId,
+                CaloriesPer100g = dto.CaloriesPer100g,
+                ProteinPer100g = dto.ProteinPer100g,
+                CarbsPer100g = dto.CarbsPer100g,
+                FatPer100g = dto.FatPer100g,
+                IsLenten = dto.IsLenten,
+                Status = dto.Status,
+                AdminNote = dto.AdminNote
+            };
+        }
+    }
+}

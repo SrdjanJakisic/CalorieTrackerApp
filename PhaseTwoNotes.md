@@ -1,0 +1,1 @@
+Додај UploadImage методу у FoodsController
