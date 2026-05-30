@@ -30,10 +30,6 @@ namespace CalorieTracker.Infrastructure.Data
                 .WithMany(x => x.Items)
                 .HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<FoodItem>()
-                .HasIndex(x => new { x.Name, x.Manufacturer })
-                .IsUnique();
-
             modelBuilder.Entity<FoodSuggestion>()
                 .HasOne<ApplicationUser>()
                 .WithMany()

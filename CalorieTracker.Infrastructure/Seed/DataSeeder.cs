@@ -1,10 +1,8 @@
 ﻿using CalorieTracker.Domain.Entities;
 using CalorieTracker.Domain.Interfaces;
 using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Drawing.Diagrams;
-using DocumentFormat.OpenXml.Spreadsheet;
-using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,6 +15,7 @@ namespace CalorieTracker.Infrastructure.Seed
         {
             using var scope = serviceProvider.CreateScope();
             var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+            var logger = scope.ServiceProvider.GetRequiredService<ILogger<DataSeeder>>();
 
             var excelPath = Path.Combine(AppContext.BaseDirectory, "database.xlsx");
             if (!File.Exists(excelPath)) return;
@@ -25,8 +24,10 @@ namespace CalorieTracker.Infrastructure.Seed
             var sheet = workbook.Worksheet("База");
 
             int seeded = 0;
+            var categoryList = await unitOfWork.FoodCategories.GetAllAsync();
+            var categoryMap = categoryList.ToDictionary(x => x.Name, x => x);
 
-            foreach(var row in sheet.RowsUsed().Skip(1))
+            foreach (var row in sheet.RowsUsed().Skip(1))
             {
                 var name = row.Cell(1).GetValue<string>();
                 var categoryName = row.Cell(7).GetValue<string>();
@@ -37,15 +38,15 @@ namespace CalorieTracker.Infrastructure.Seed
                 var fat = row.Cell(5).GetValue<float>();
                 var lenten = row.Cell(10).GetValue<bool>();
 
-                if (await unitOfWork.FoodItems.ExistsASync(name, manufacturer)) continue;
+                manufacturer = string.IsNullOrWhiteSpace(manufacturer) ? null : manufacturer;
+                if (await unitOfWork.FoodItems.ExistsAsync(name, manufacturer)) continue;
 
-                var categories = await unitOfWork.FoodCategories.GetAllAsync();
-                var category = categories.FirstOrDefault(x => x.Name == categoryName);
-                if(category == null)
+                if(!categoryMap.TryGetValue(categoryName, out var category))
                 {
                     category = new FoodCategory { Name = categoryName };
                     await unitOfWork.FoodCategories.CreateAsync(category);
                     await unitOfWork.SaveChangesAsync();
+                    categoryMap[categoryName] = category;
                 }
 
                 var item = new FoodItem
@@ -66,6 +67,7 @@ namespace CalorieTracker.Infrastructure.Seed
             }
 
             await unitOfWork.SaveChangesAsync();
+            logger.LogInformation("Сидер: учитано {Count} намирница.", seeded);
         }
     }
 }

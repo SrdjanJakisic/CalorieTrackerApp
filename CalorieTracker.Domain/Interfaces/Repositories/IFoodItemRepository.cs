@@ -11,7 +11,7 @@ namespace CalorieTracker.Domain.Interfaces.Repositories
         Task<FoodItem?> GetByIdAsync(int id);
         // Ако је Manufacturer null -> провеерава само по Name
         // Ако Manufacturer постоји -> проверава Name + Manufacturer
-        Task<bool> ExistsASync(string name, string? manufacturer);
+        Task<bool> ExistsAsync(string name, string? manufacturer);
         Task CreateAsync(FoodItem item);
         Task UpdateAsync(FoodItem item);
         Task DeleteAsync(FoodItem item);

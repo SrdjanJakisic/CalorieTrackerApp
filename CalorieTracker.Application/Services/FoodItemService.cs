@@ -11,15 +11,9 @@ namespace CalorieTracker.Application.Services
     public class FoodItemService : IFoodItemService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public FoodItemService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+        public FoodItemService(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
         public async Task CreateAsync(CreateFoodItemDto dto)
         {
-            if (await _unitOfWork.FoodItems.ExistsASync(dto.Name, dto.Manufacturer))
-                throw new ArgumentException($"Намирница '{dto.Name}' већ постоји!");
-
             var item = new FoodItem
             {
                 CategoryId = dto.CategoryId,
@@ -27,6 +21,7 @@ namespace CalorieTracker.Application.Services
                 Manufacturer = dto.Manufacturer,
                 CaloriesPer100g = dto.CaloriesPer100g,
                 ProteinPer100g = dto.ProteinPer100g,
+                CarbsPer100g = dto.CarbsPer100g,
                 FatPer100g = dto.FatPer100g,
                 IsLenten = dto.IsLenten,
                 AdditionalInfo = dto.AdditionalInfo,
@@ -54,7 +49,7 @@ namespace CalorieTracker.Application.Services
                 Id = item.Id,
                 Name = item.Name,
                 Manufacturer = item.Manufacturer,
-                CategoryName = item.Category.Name ?? string.Empty,
+                CategoryName = item.Category?.Name ?? string.Empty,
                 CaloriesPer100g = item.CaloriesPer100g,
                 IsLenten = item.IsLenten,
                 ImageUrl = item.ImageUrl
@@ -95,7 +90,7 @@ namespace CalorieTracker.Application.Services
             {
                 Id = item.Id,
                 CategoryId = item.CategoryId,
-                CategoryName = item.Category.Name ?? string.Empty,
+                CategoryName = item.Category?.Name ?? string.Empty,
                 Name = item.Name,
                 Manufacturer = item.Manufacturer,
                 CaloriesPer100g = item.CaloriesPer100g,

@@ -11,7 +11,6 @@ namespace CalorieTracker.Domain.Entities
         public string UserId { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public string? Manufacturer { get; set; }
-        public string ProductType { get; set; } = string.Empty;
         public int CategoryId { get; set; }
         public float CaloriesPer100g { get; set; }
         public float ProteinPer100g { get; set; }

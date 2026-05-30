@@ -26,8 +26,6 @@ namespace CalorieTracker.Infrastructure.Services
             _unitOfWork = unitOfWork;
             _userProfilRepo = userPorfileRepo;
         }
-
-
         public async Task<AuthResponseDto> LoginAsync(LoginDto dto)
         {
             var user = await _userManager.FindByEmailAsync(dto.Email);
@@ -40,7 +38,6 @@ namespace CalorieTracker.Infrastructure.Services
             var roles = await _userManager.GetRolesAsync(user);
             var role = roles.FirstOrDefault() ?? "User";
 
-            var accessToken = await _jwtService.GenerateAccessToken(user.Id, user.Email, role);
             var refreshToken = _jwtService.GenerateRefreshToken();
 
             user.RefreshToken = refreshToken;
@@ -48,15 +45,16 @@ namespace CalorieTracker.Infrastructure.Services
 
             await _userManager.UpdateAsync(user);
 
+            var (accessToken, expiresAt) = await _jwtService.GenerateAccessToken(user.Id, user.Email!, role);
+
             return new AuthResponseDto
             {
                 AccessToken = accessToken,
                 RefreshToken = refreshToken,
-                ExpiresAt = DateTime.UtcNow.AddMinutes(15)
+                ExpiresAt = expiresAt
             };
 
         }
-
         public async Task<AuthResponseDto> RefreshAsync(string refreshToken)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.RefreshToken == refreshToken);
@@ -67,7 +65,6 @@ namespace CalorieTracker.Infrastructure.Services
             var roles = await _userManager.GetRolesAsync(user);
             var role = roles.FirstOrDefault() ?? "User";
 
-            var newAccessToken = await _jwtService.GenerateAccessToken(user.Id, user.Email, role);
             var newRefreshToken = _jwtService.GenerateRefreshToken();
 
             user.RefreshToken = newRefreshToken;
@@ -75,17 +72,18 @@ namespace CalorieTracker.Infrastructure.Services
 
             await _userManager.UpdateAsync(user);
 
+            var (newAccessToken, expiresAt) = await _jwtService.GenerateAccessToken(user.Id, user.Email!, role);
+
             return new AuthResponseDto
             {
                 AccessToken = newAccessToken,
                 RefreshToken = newRefreshToken,
-                ExpiresAt = DateTime.UtcNow.AddMinutes(15)
+                ExpiresAt = expiresAt
             };
 
 
 
         }
-
         public async Task RegisterAsync(RegisterDto dto)
         {
             var user = new ApplicationUser
@@ -98,8 +96,8 @@ namespace CalorieTracker.Infrastructure.Services
 
             if(!result.Succeeded)
             {
-                var errors = string.Join(", ", result.Errors.Select(e => e.Code));
-                throw new Exception(errors);
+                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                throw new ArgumentException(errors);
             }
 
             await _userManager.AddToRoleAsync(user, "User");
@@ -114,7 +112,6 @@ namespace CalorieTracker.Infrastructure.Services
             await _userProfilRepo.CreateAsync(profile);
             await _unitOfWork.SaveChangesAsync();
         }
-
         public async Task RevokeAsync(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);

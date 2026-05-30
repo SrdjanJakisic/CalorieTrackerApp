@@ -26,7 +26,7 @@ namespace CalorieTracker.Infrastructure.Repositories
 
             return await query.ToListAsync();
         }
-        public async Task<FoodSuggestion> GetById(int id) => await _db.FoodSuggestions.FindAsync(id);
+        public async Task<FoodSuggestion?> GetByIdAsync(int id) => await _db.FoodSuggestions.FindAsync(id);
         public async Task UpdateAsync(FoodSuggestion suggestion) => _db.FoodSuggestions.Update(suggestion);
     }
 }

@@ -1,7 +1,4 @@
 <Solution>
-  <Folder Name="/Solution Items/">
-    <File Path="PhaseTwoNotes.md" />
-  </Folder>
   <Project Path="CalorieTracker.API/CalorieTracker.API.csproj" />
   <Project Path="CalorieTracker.Application/CalorieTracker.Application.csproj" />
   <Project Path="CalorieTracker.Domain/CalorieTracker.Domain.csproj" />

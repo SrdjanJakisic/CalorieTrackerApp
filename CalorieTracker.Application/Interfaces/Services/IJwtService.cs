@@ -6,7 +6,7 @@ namespace CalorieTracker.Application.Interfaces.Services
 {
     public interface IJwtService
     {
-        Task<string> GenerateAccessToken(string userId, string email, string role);
+        Task<(string token, DateTime expiresAt)> GenerateAccessToken(string userId, string email, string role);
         string GenerateRefreshToken();
     }
 }

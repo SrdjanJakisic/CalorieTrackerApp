@@ -8,7 +8,6 @@ namespace CalorieTracker.Domain.Entities
     {
         public int Id { get; set; }
         public int CategoryId { get; set; }
-        public string ProductType { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public string? Manufacturer { get; set; }
         public float CaloriesPer100g { get; set; }

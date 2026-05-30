@@ -14,14 +14,14 @@ namespace CalorieTracker.Infrastructure.Repositories
         public FoodItemRepository(AppDbContext db) => _db = db;
         public async Task CreateAsync(FoodItem item) => await _db.FoodItems.AddAsync(item);
         public async Task DeleteAsync(FoodItem item) => _db.FoodItems.Remove(item);
-        public async Task<bool> ExistsASync(string name, string? manufacturer) => await _db.FoodItems.AnyAsync(x => x.Name == name && x.Manufacturer == manufacturer);
+        public async Task<bool> ExistsAsync(string name, string? manufacturer) => await _db.FoodItems.AnyAsync(x => x.Name == name && x.Manufacturer == manufacturer);
         public async Task<IEnumerable<FoodItem>> GetAllAsync(string? search, int? categoryId, bool? isLenten, bool? isApproved)
         {
             var query = _db.FoodItems.Include(x => x.Category).AsQueryable();
 
             if(!string.IsNullOrEmpty(search))
             {
-                query = query.Where(x => x.Name.Contains(search) || x.Manufacturer.Contains(search));
+                query = query.Where(x => x.Name.Contains(search) || (x.Manufacturer != null && x.Manufacturer.Contains(search)));
             }
 
             if (categoryId.HasValue) 

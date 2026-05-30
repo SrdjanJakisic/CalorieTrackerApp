@@ -11,7 +11,6 @@ namespace CalorieTracker.Application.Validators.FoodSuggestion
         public CreateFoodSuggestionValidator()
         {
             RuleFor(x => x.Name).NotEmpty().MaximumLength(100);
-            RuleFor(x => x.Manufacturer).NotEmpty();
             RuleFor(x => x.CategoryId).GreaterThan(0);
             RuleFor(x => x.CaloriesPer100g).GreaterThanOrEqualTo(0);
             RuleFor(x => x.ProteinPer100g).GreaterThanOrEqualTo(0);

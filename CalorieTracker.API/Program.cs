@@ -14,6 +14,8 @@ using CalorieTracker.Domain.Interfaces;
 using CalorieTracker.Infrastructure.Repositories;
 using CalorieTracker.Domain.Interfaces.Repositories;
 using CalorieTracker.API.Middleware;
+using CalorieTracker.Application.Services;
+Console.OutputEncoding = System.Text.Encoding.UTF8;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,6 +61,9 @@ builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
 builder.Services.AddScoped<IFoodCategoryRepository, FoodCategoryRepository>();
 builder.Services.AddScoped<IFoodItemRepository, FoodItemRepository>();
 builder.Services.AddScoped<IFoodSuggestionRepository, FoodSuggestionRepository>();
+builder.Services.AddScoped<IFoodItemService, FoodItemService>();
+builder.Services.AddScoped<IFoodSuggestionService, FoodSuggestionService>();
+builder.Services.AddScoped<IFoodCategoryService, FoodCategoryService>();
 
 //Swagger
 builder.Services.AddEndpointsApiExplorer();
