@@ -13,7 +13,7 @@ namespace CalorieTracker.Application.Services
         private readonly IUnitOfWork _unitOfWork;
 
         public FoodCategoryService(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
-        public async Task CreateAsync(CreateFoodCategoryDto dto)
+        public async Task<FoodCategoryDto> CreateAsync(CreateFoodCategoryDto dto)
         {
             var foodCategory = new FoodCategory
             {
@@ -23,6 +23,8 @@ namespace CalorieTracker.Application.Services
 
             await _unitOfWork.FoodCategories.CreateAsync(foodCategory);
             await _unitOfWork.SaveChangesAsync();
+
+            return MapTo(foodCategory);
         }
         public async Task<IEnumerable<FoodCategoryDto>> GetAllAsync()
         {

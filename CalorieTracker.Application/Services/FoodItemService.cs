@@ -12,7 +12,7 @@ namespace CalorieTracker.Application.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         public FoodItemService(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
-        public async Task CreateAsync(CreateFoodItemDto dto)
+        public async Task<FoodItemDto> CreateAsync(CreateFoodItemDto dto)
         {
             var item = new FoodItem
             {
@@ -31,6 +31,8 @@ namespace CalorieTracker.Application.Services
 
             await _unitOfWork.FoodItems.CreateAsync(item);
             await _unitOfWork.SaveChangesAsync();
+
+            return MapToDto(item);
         }
         public async Task DeleteAsync(int id)
         {
@@ -61,6 +63,15 @@ namespace CalorieTracker.Application.Services
                 ?? throw new KeyNotFoundException($"Намирница са ID {id} не постоји!");
 
             return MapToDto(item);
+        }
+        public async Task SetImageUrlAsync(int id, string imageUrl)
+        {
+            var item = await _unitOfWork.FoodItems.GetByIdAsync(id)
+                ?? throw new KeyNotFoundException($"Намирница са ID {id} не постоји!");
+
+            item.ImageUrl = imageUrl;
+            await _unitOfWork.FoodItems.UpdateAsync(item);
+            await _unitOfWork.SaveChangesAsync();
         }
         public async Task<FoodItemDto> UpdateAsync(int id, UpdateFoodItemDto dto)
         {
