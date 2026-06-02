@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CalorieTracker.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -10,6 +11,9 @@ namespace CalorieTracker.Domain.Entities
         public int Id { get; set; }
         [Required]
         public string UserId { get; set; } = string.Empty;
+        public Gender? Gender { get; set; }
+        public float Height { get; set; }
+        public DateOnly DateOfBirth { get; set; }
         public int CalorieGoal { get; set; }
         public int ProteinGoal { get; set; }
         public string? ProfileImageUrl { get; set; }

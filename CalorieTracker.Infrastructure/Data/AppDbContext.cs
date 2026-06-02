@@ -15,6 +15,10 @@ namespace CalorieTracker.Infrastructure.Data
         public DbSet<FoodCategory> FoodCategories { get; set; }
         public DbSet<FoodItem> FoodItems { get; set; }
         public DbSet<FoodSuggestion> FoodSuggestions { get; set; }
+        public DbSet<MonthlyPlan> MonthlyPlans { get; set; }
+        public DbSet<DayEntry> DayEntries { get; set; }
+        public DbSet<Meal> Meals { get; set; }
+        public DbSet<MealItem> MealItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,6 +39,40 @@ namespace CalorieTracker.Infrastructure.Data
                 .WithMany()
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<MonthlyPlan>()
+                .HasMany(x => x.Days)
+                .WithOne(x => x.MonthlyPlan)
+                .HasForeignKey(x => x.MonthlyPlanId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<DayEntry>()
+                .HasMany(x => x.Meals)
+                .WithOne(x => x.DayEntry)
+                .HasForeignKey(x => x.DayEntryId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Meal>()
+                .HasMany(x => x.MealItems)
+                .WithOne(x => x.Meal)
+                .HasForeignKey(x => x.MealId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<MealItem>()
+                .HasOne(x => x.FoodItem)
+                .WithMany()
+                .HasForeignKey(x => x.FoodItemId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<MonthlyPlan>()
+                .HasOne<ApplicationUser>()
+                .WithMany()
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<MonthlyPlan>()
+                .HasIndex(x => new { x.UserId, x.Year, x.Month })
+                .IsUnique();
         }
     }
 }
