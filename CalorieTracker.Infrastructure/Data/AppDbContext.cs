@@ -19,6 +19,10 @@ namespace CalorieTracker.Infrastructure.Data
         public DbSet<DayEntry> DayEntries { get; set; }
         public DbSet<Meal> Meals { get; set; }
         public DbSet<MealItem> MealItems { get; set; }
+        public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<RecipeImage> RecipeItems { get; set; }
+        public DbSet<RecipeImage> RecipeImages { get; set; }
+        public DbSet<WeightEntry> WeightEntries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -72,6 +76,35 @@ namespace CalorieTracker.Infrastructure.Data
 
             modelBuilder.Entity<MonthlyPlan>()
                 .HasIndex(x => new { x.UserId, x.Year, x.Month })
+                .IsUnique();
+
+            modelBuilder.Entity<Recipe>()
+                .HasMany(x => x.Items)
+                .WithOne(x => x.Recipe)
+                .HasForeignKey(x => x.RecipeId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Recipe>()
+                .HasMany(x => x.Images)
+                .WithOne(x => x.Recipe)
+                .HasForeignKey(x => x.RecipeId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<RecipeItem>()
+                .HasOne(x => x.FoodItem)
+                .WithMany()
+                .HasForeignKey(x => x.FoodItemId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Recipe>()
+                .HasOne<ApplicationUser>()
+                .WithMany()
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired(false);
+
+            modelBuilder.Entity<WeightEntry>()
+                .HasIndex(x => new { x.UserId, x.Date })
                 .IsUnique();
         }
     }
