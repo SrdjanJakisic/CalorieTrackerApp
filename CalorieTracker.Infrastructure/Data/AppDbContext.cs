@@ -20,7 +20,7 @@ namespace CalorieTracker.Infrastructure.Data
         public DbSet<Meal> Meals { get; set; }
         public DbSet<MealItem> MealItems { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
-        public DbSet<RecipeImage> RecipeItems { get; set; }
+        public DbSet<RecipeItem> RecipeItems { get; set; }
         public DbSet<RecipeImage> RecipeImages { get; set; }
         public DbSet<WeightEntry> WeightEntries { get; set; }
 
