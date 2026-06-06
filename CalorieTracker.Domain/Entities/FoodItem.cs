@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CalorieTracker.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,6 +11,8 @@ namespace CalorieTracker.Domain.Entities
         public int CategoryId { get; set; }
         public string Name { get; set; } = string.Empty;
         public string? Manufacturer { get; set; }
+        public MeasureUnit Unit { get; set; }
+        public float? GramsPerPiece { get; set; }
         public float CaloriesPer100g { get; set; }
         public float ProteinPer100g { get; set; }
         public float CarbsPer100g { get; set; }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CalorieTracker.Domain.Interfaces.Repositories
 {
-    public interface IMonhtlyPlanRepository
+    public interface IMonthlyPlanRepository
     {
         Task<MonthlyPlan?> GetByUserMonthAsync(string userId, int year, int month);
         Task<DayEntry?> GetDayAsync(string userId, DateOnly date);

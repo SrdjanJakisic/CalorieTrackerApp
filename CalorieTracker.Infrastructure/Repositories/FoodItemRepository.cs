@@ -13,7 +13,11 @@ namespace CalorieTracker.Infrastructure.Repositories
         private readonly AppDbContext _db;
         public FoodItemRepository(AppDbContext db) => _db = db;
         public async Task CreateAsync(FoodItem item) => await _db.FoodItems.AddAsync(item);
-        public async Task DeleteAsync(FoodItem item) => _db.FoodItems.Remove(item);
+        public Task DeleteAsync(FoodItem item)
+        {
+            _db.FoodItems.Remove(item);
+            return Task.CompletedTask;
+        }
         public async Task<bool> ExistsAsync(string name, string? manufacturer) => await _db.FoodItems.AnyAsync(x => x.Name == name && x.Manufacturer == manufacturer);
         public async Task<IEnumerable<FoodItem>> GetAllAsync(string? search, int? categoryId, bool? isLenten, bool? isApproved)
         {
@@ -41,7 +45,12 @@ namespace CalorieTracker.Infrastructure.Repositories
 
             return await query.ToListAsync();
         }
-        public async Task<FoodItem?> GetByIdAsync(int id) => await _db.FoodItems.Include(x => x.Category).FirstOrDefaultAsync(x => x.Id == id);
-        public async Task UpdateAsync(FoodItem item) => _db.FoodItems.Update(item);
+        public async Task<FoodItem?> GetByIdAsync(int id) 
+            => await _db.FoodItems.Include(x => x.Category).FirstOrDefaultAsync(x => x.Id == id);
+        public Task UpdateAsync(FoodItem item)
+        {
+            _db.FoodItems.Update(item);
+            return Task.CompletedTask;
+        }
     }
 }

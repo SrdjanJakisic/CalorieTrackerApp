@@ -64,6 +64,10 @@ builder.Services.AddScoped<IFoodSuggestionRepository, FoodSuggestionRepository>(
 builder.Services.AddScoped<IFoodItemService, FoodItemService>();
 builder.Services.AddScoped<IFoodSuggestionService, FoodSuggestionService>();
 builder.Services.AddScoped<IFoodCategoryService, FoodCategoryService>();
+builder.Services.AddScoped<IMonthlyPlanRepository, MonthlyPlanRepository>();
+builder.Services.AddScoped<IMealItemRepository, MealItemRepository>();
+builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
+builder.Services.AddScoped<IWeightEntryRepository, WeightEntryRepository>();
 
 //Swagger
 builder.Services.AddEndpointsApiExplorer();
