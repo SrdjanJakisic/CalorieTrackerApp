@@ -1,9 +1,6 @@
 ﻿using CalorieTracker.Domain.Interfaces;
 using CalorieTracker.Domain.Interfaces.Repositories;
 using CalorieTracker.Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CalorieTracker.Infrastructure
 {

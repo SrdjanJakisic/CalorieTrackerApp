@@ -2,9 +2,6 @@
 using CalorieTracker.Application.Interfaces.Services;
 using CalorieTracker.Domain.Entities;
 using CalorieTracker.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CalorieTracker.Application.Services
 {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Principal;
-using System.Text;
-
-namespace CalorieTracker.Domain.Entities
+﻿namespace CalorieTracker.Domain.Entities
 {
     public class FoodCategory
     {

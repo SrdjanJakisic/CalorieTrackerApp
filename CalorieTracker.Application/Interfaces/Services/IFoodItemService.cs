@@ -1,7 +1,4 @@
 ﻿using CalorieTracker.Application.DTO.FoodItem;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CalorieTracker.Application.Interfaces.Services
 {

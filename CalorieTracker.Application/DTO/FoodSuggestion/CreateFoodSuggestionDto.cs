@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CalorieTracker.Domain.Enums;
 
 namespace CalorieTracker.Application.DTO.FoodSuggestion
 {
@@ -9,10 +7,12 @@ namespace CalorieTracker.Application.DTO.FoodSuggestion
         public string Name { get; set; } = string.Empty;
         public string Manufacturer { get; set; } = string.Empty;
         public int CategoryId { get; set; }
-        public float CaloriesPer100g { get; set; }
-        public float ProteinPer100g { get; set; }
-        public float CarbsPer100g { get; set; }
-        public float FatPer100g { get; set; }
+        public MeasureUnit Unit { get; set; }
+        public float? AmountPerPiece { get; set; }
+        public float Calories { get; set; }
+        public float Protein { get; set; }
+        public float Carbs { get; set; }
+        public float Fat { get; set; }
         public bool IsLenten { get; set; }
     }
 }

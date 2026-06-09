@@ -2,9 +2,6 @@
 using CalorieTracker.Application.Interfaces.Services;
 using CalorieTracker.Domain.Entities;
 using CalorieTracker.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CalorieTracker.Application.Services
 {
@@ -18,11 +15,13 @@ namespace CalorieTracker.Application.Services
             {
                 CategoryId = dto.CategoryId,
                 Name = dto.Name,
-                Manufacturer = dto.Manufacturer,
-                CaloriesPer100g = dto.CaloriesPer100g,
-                ProteinPer100g = dto.ProteinPer100g,
-                CarbsPer100g = dto.CarbsPer100g,
-                FatPer100g = dto.FatPer100g,
+                Manufacturer = string.IsNullOrWhiteSpace(dto.Manufacturer) ? null : dto.Manufacturer,
+                Unit = dto.Unit,
+                AmountPerPiece = dto.AmountPerPiece,
+                Calories = dto.Calories,
+                Protein = dto.Protein,
+                Carbs = dto.Carbs,
+                Fat = dto.Fat,
                 IsLenten = dto.IsLenten,
                 AdditionalInfo = dto.AdditionalInfo,
                 Source = dto.Source,
@@ -32,7 +31,10 @@ namespace CalorieTracker.Application.Services
             await _unitOfWork.FoodItems.CreateAsync(item);
             await _unitOfWork.SaveChangesAsync();
 
-            return MapToDto(item);
+            var created = await _unitOfWork.FoodItems.GetByIdAsync(item.Id)
+                ?? throw new InvalidOperationException("Намирница није креирана!");
+
+            return MapToDto(created);
         }
         public async Task DeleteAsync(int id)
         {
@@ -51,8 +53,9 @@ namespace CalorieTracker.Application.Services
                 Id = item.Id,
                 Name = item.Name,
                 Manufacturer = item.Manufacturer,
+                Unit = item.Unit,
                 CategoryName = item.Category?.Name ?? string.Empty,
-                CaloriesPer100g = item.CaloriesPer100g,
+                Calories = item.Calories,
                 IsLenten = item.IsLenten,
                 ImageUrl = item.ImageUrl
             });
@@ -80,11 +83,13 @@ namespace CalorieTracker.Application.Services
 
             item.CategoryId = dto.CategoryId;
             item.Name = dto.Name;
-            item.Manufacturer = dto.Manufacturer;
-            item.CaloriesPer100g = dto.CaloriesPer100g;
-            item.ProteinPer100g = dto.ProteinPer100g;
-            item.CarbsPer100g = dto.CarbsPer100g;
-            item.FatPer100g = dto.FatPer100g;
+            item.Manufacturer = string.IsNullOrWhiteSpace(dto.Manufacturer) ? null : dto.Manufacturer;
+            item.Unit = dto.Unit;
+            item.AmountPerPiece = dto.AmountPerPiece;
+            item.Calories = dto.Calories;
+            item.Protein = dto.Protein;
+            item.Carbs = dto.Carbs;
+            item.Fat = dto.Fat;
             item.IsLenten = dto.IsLenten;
             item.IsApproved = dto.IsApproved;
             item.Source = dto.Source;
@@ -93,7 +98,10 @@ namespace CalorieTracker.Application.Services
             await _unitOfWork.FoodItems.UpdateAsync(item);
             await _unitOfWork.SaveChangesAsync();
 
-            return MapToDto(item);
+            var updated = await _unitOfWork.FoodItems.GetByIdAsync(item.Id)
+                ?? throw new InvalidOperationException("Намирница није ажурирана!");
+
+            return MapToDto(updated);
         }
         private FoodItemDto MapToDto(FoodItem item)
         {
@@ -104,10 +112,12 @@ namespace CalorieTracker.Application.Services
                 CategoryName = item.Category?.Name ?? string.Empty,
                 Name = item.Name,
                 Manufacturer = item.Manufacturer,
-                CaloriesPer100g = item.CaloriesPer100g,
-                ProteinPer100g = item.ProteinPer100g,
-                CarbsPer100g = item.CarbsPer100g,
-                FatPer100g = item.FatPer100g,
+                Unit = item.Unit,
+                AmountPerPiece = item.AmountPerPiece,
+                Calories = item.Calories,
+                Protein = item.Protein,
+                Carbs = item.Carbs,
+                Fat = item.Fat,
                 IsLenten = item.IsLenten,
                 IsApproved = item.IsApproved,
                 AdditionalInfo = item.AdditionalInfo,

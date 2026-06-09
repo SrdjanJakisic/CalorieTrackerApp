@@ -4,6 +4,7 @@ using CalorieTracker.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CalorieTracker.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260609093657_RenameNutritionFields")]
+    partial class RenameNutritionFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,9 +138,6 @@ namespace CalorieTracker.Infrastructure.Migrations
                     b.Property<string>("AdminNote")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float?>("AmountPerPiece")
-                        .HasColumnType("real");
-
                     b.Property<float>("Calories")
                         .HasColumnType("real");
 
@@ -164,9 +164,6 @@ namespace CalorieTracker.Infrastructure.Migrations
                         .HasColumnType("real");
 
                     b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Unit")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
@@ -720,15 +717,6 @@ namespace CalorieTracker.Infrastructure.Migrations
                     b.HasOne("CalorieTracker.Infrastructure.Identity.ApplicationUser", null)
                         .WithOne()
                         .HasForeignKey("CalorieTracker.Domain.Entities.UserProfile", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CalorieTracker.Domain.Entities.WeightEntry", b =>
-                {
-                    b.HasOne("CalorieTracker.Infrastructure.Identity.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

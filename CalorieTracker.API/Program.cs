@@ -1,20 +1,21 @@
+using CalorieTracker.API.Middleware;
+using CalorieTracker.Application;
+using CalorieTracker.Application.Interfaces.Services;
+using CalorieTracker.Application.Services;
+using CalorieTracker.Domain.Interfaces;
+using CalorieTracker.Domain.Interfaces.Repositories;
 using CalorieTracker.Infrastructure;
 using CalorieTracker.Infrastructure.Data;
 using CalorieTracker.Infrastructure.Identity;
+using CalorieTracker.Infrastructure.Repositories;
+using CalorieTracker.Infrastructure.Services;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using System.Text;
-using CalorieTracker.Application;
-using FluentValidation;
-using CalorieTracker.Application.Interfaces.Services;
-using CalorieTracker.Infrastructure.Services;
-using CalorieTracker.Domain.Interfaces;
-using CalorieTracker.Infrastructure.Repositories;
-using CalorieTracker.Domain.Interfaces.Repositories;
-using CalorieTracker.API.Middleware;
-using CalorieTracker.Application.Services;
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -52,6 +53,7 @@ builder.Services.AddAuthorization();
 //FluentValidation
 builder.Services.AddControllers();
 builder.Services.AddValidatorsFromAssemblyContaining<AssemblyMarker>();
+builder.Services.AddFluentValidationAutoValidation();
 
 //Services
 builder.Services.AddScoped<IJwtService, JwtService>();

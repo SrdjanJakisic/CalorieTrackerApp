@@ -1,8 +1,5 @@
 ﻿using CalorieTracker.Application.DTO.Auth;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CalorieTracker.Application.Validators.Auth
 {
@@ -10,9 +7,15 @@ namespace CalorieTracker.Application.Validators.Auth
     {
         public RegisterValidator()
         {
-            RuleFor(x => x.Email).NotEmpty().EmailAddress();
-            RuleFor(x => x.Password).NotEmpty().MinimumLength(6);
-            RuleFor(x => x.ConfirmPassword).NotEmpty().Equal(x => x.Password).WithMessage("Лозинке се не поклапају!");
+            RuleFor(x => x.Email)
+                .NotEmpty().WithMessage("Email је обавезан")
+                .EmailAddress().WithMessage("Email мора бити у исправном формату!");
+            RuleFor(x => x.Password)
+                .NotEmpty().WithMessage("Лозинка је обавезна")
+                .MinimumLength(6).WithMessage("Лозинка мора имати најмање 6 знакова!");
+            RuleFor(x => x.ConfirmPassword)
+                .NotEmpty().WithMessage("Потврда лозинке је обавезна!")
+                .Equal(x => x.Password).WithMessage("Лозинке се не поклапају!");
         }
     }
 }

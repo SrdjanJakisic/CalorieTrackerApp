@@ -1,9 +1,5 @@
 ﻿using CalorieTracker.Application.DTO.FoodSuggestion;
-using CalorieTracker.Domain.Entities;
 using CalorieTracker.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CalorieTracker.Application.Interfaces.Services
 {

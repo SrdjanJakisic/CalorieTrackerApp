@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CalorieTracker.Domain.Entities
+﻿namespace CalorieTracker.Domain.Entities
 {
     public class DayEntry
     {

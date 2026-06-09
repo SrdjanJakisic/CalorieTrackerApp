@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CalorieTracker.Domain.Enums
+﻿namespace CalorieTracker.Domain.Enums
 {
     public enum SuggestionStatus
     {

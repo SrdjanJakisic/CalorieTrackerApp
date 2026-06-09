@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CalorieTracker.Application.Interfaces.Services
+﻿namespace CalorieTracker.Application.Interfaces.Services
 {
     public interface IJwtService
     {

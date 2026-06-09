@@ -3,9 +3,6 @@ using CalorieTracker.Domain.Interfaces;
 using ClosedXML.Excel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CalorieTracker.Infrastructure.Seed
 {
@@ -54,10 +51,10 @@ namespace CalorieTracker.Infrastructure.Seed
                     Name = name,
                     Manufacturer = manufacturer,
                     CategoryId = category.Id,
-                    CaloriesPer100g = calories,
-                    ProteinPer100g = protein,
-                    CarbsPer100g = carbs,
-                    FatPer100g = fat,
+                    Calories = calories,
+                    Protein = protein,
+                    Carbs = carbs,
+                    Fat = fat,
                     IsApproved = true,
                     IsLenten = lenten
                 };

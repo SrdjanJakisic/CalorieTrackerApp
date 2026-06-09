@@ -5,9 +5,6 @@ using CalorieTracker.Domain.Interfaces;
 using CalorieTracker.Domain.Interfaces.Repositories;
 using CalorieTracker.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
 
 namespace CalorieTracker.Infrastructure.Services

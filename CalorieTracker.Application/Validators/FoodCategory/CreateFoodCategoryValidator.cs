@@ -1,8 +1,5 @@
 ﻿using CalorieTracker.Application.DTO.FoodCategory;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CalorieTracker.Application.Validators.FoodCategory
 {
@@ -10,7 +7,9 @@ namespace CalorieTracker.Application.Validators.FoodCategory
     {
         public CreateFoodCategoryValidator()
         {
-            RuleFor(x => x.Name).NotEmpty().MaximumLength(100);
+            RuleFor(x => x.Name)
+                .NotEmpty().WithMessage("Назив је обавезан!")
+                .MaximumLength(100).WithMessage("Назив не може бити дужи од 100 знакова!");
         }
     }
 }

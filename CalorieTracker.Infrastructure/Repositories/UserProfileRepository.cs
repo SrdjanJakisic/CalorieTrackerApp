@@ -1,10 +1,6 @@
 ﻿using CalorieTracker.Domain.Entities;
 using CalorieTracker.Domain.Interfaces.Repositories;
 using CalorieTracker.Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
 
 namespace CalorieTracker.Infrastructure.Repositories
 {

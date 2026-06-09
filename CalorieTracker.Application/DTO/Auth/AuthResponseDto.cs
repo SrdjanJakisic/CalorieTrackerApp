@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CalorieTracker.Application.DTO.Auth
+﻿namespace CalorieTracker.Application.DTO.Auth
 {
     public class AuthResponseDto
     {

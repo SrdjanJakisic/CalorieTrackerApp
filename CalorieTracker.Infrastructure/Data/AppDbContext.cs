@@ -2,9 +2,6 @@
 using CalorieTracker.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CalorieTracker.Infrastructure.Data
 {
@@ -106,6 +103,12 @@ namespace CalorieTracker.Infrastructure.Data
             modelBuilder.Entity<WeightEntry>()
                 .HasIndex(x => new { x.UserId, x.Date })
                 .IsUnique();
+
+            modelBuilder.Entity<WeightEntry>()
+                .HasOne<ApplicationUser>()
+                .WithMany()
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

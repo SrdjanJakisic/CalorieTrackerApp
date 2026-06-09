@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CalorieTracker.Application.DTO.FoodCategory
+﻿namespace CalorieTracker.Application.DTO.FoodCategory
 {
     public class FoodCategoryDto
     {

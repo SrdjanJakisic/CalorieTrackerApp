@@ -3,10 +3,6 @@ using CalorieTracker.Application.Interfaces.Services;
 using CalorieTracker.Domain.Entities;
 using CalorieTracker.Domain.Enums;
 using CalorieTracker.Domain.Interfaces;
-using CalorieTracker.Domain.Interfaces.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CalorieTracker.Application.Services
 {
@@ -30,10 +26,12 @@ namespace CalorieTracker.Application.Services
                 CategoryId = suggestion.CategoryId,
                 Name = suggestion.Name,
                 Manufacturer = suggestion.Manufacturer,
-                CaloriesPer100g = suggestion.CaloriesPer100g,
-                ProteinPer100g = suggestion.ProteinPer100g,
-                CarbsPer100g = suggestion.CarbsPer100g,
-                FatPer100g = suggestion.FatPer100g,
+                Unit = suggestion.Unit,
+                AmountPerPiece = suggestion.AmountPerPiece,
+                Calories = suggestion.Calories,
+                Protein = suggestion.Protein,
+                Carbs = suggestion.Carbs,
+                Fat = suggestion.Fat,
                 IsLenten = suggestion.IsLenten,
                 IsApproved = true
             };
@@ -47,12 +45,14 @@ namespace CalorieTracker.Application.Services
             {
                 UserId = userId,
                 Name = dto.Name,
-                Manufacturer = dto.Manufacturer,
+                Manufacturer = string.IsNullOrWhiteSpace(dto.Manufacturer) ? null : dto.Manufacturer,
                 CategoryId = dto.CategoryId,
-                CaloriesPer100g = dto.CaloriesPer100g,
-                ProteinPer100g = dto.ProteinPer100g,
-                CarbsPer100g = dto.CarbsPer100g,
-                FatPer100g = dto.FatPer100g,
+                Unit = dto.Unit,
+                AmountPerPiece = dto.AmountPerPiece,
+                Calories = dto.Calories,
+                Protein = dto.Protein,
+                Carbs = dto.Carbs,
+                Fat = dto.Fat,
                 IsLenten = dto.IsLenten,
                 Status = SuggestionStatus.Pending,
                 AdminNote = null
@@ -90,10 +90,12 @@ namespace CalorieTracker.Application.Services
                 Name = suggestion.Name,
                 Manufacturer = suggestion.Manufacturer,
                 CategoryId = suggestion.CategoryId,
-                CaloriesPer100g = suggestion.CaloriesPer100g,
-                ProteinPer100g = suggestion.ProteinPer100g,
-                CarbsPer100g = suggestion.CarbsPer100g,
-                FatPer100g = suggestion.FatPer100g,
+                Unit = suggestion.Unit,
+                AmountPerPiece = suggestion.AmountPerPiece,
+                Calories = suggestion.Calories,
+                Protein = suggestion.Protein,
+                Carbs = suggestion.Carbs,
+                Fat = suggestion.Fat,
                 IsLenten = suggestion.IsLenten,
                 Status = suggestion.Status,
                 AdminNote = suggestion.AdminNote

@@ -1,7 +1,4 @@
 ﻿using CalorieTracker.Domain.Interfaces.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CalorieTracker.Domain.Interfaces
 {
