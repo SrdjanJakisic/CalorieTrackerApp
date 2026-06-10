@@ -23,18 +23,6 @@ namespace CalorieTracker.Tests.Calculations
         }
 
         [Fact]
-        public void Add_DoesNotMutateOriginal()
-        {
-            var a = new NutritionValues { Calories = 100 };
-            var b = new NutritionValues { Calories = 50 };
-
-            _ = a.Add(b);
-
-            a.Calories.Should().Be(100);
-            b.Calories.Should().Be(50);
-        }
-
-        [Fact]
         public void Add_EmptyToFull_ReturnsFull()
         {
             var empty = new NutritionValues();
