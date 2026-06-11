@@ -21,7 +21,6 @@ namespace CalorieTracker.Tests.Calculations
             sum.Carbs.Should().Be(30);
             sum.Fat.Should().Be(7);
         }
-
         [Fact]
         public void Add_EmptyToFull_ReturnsFull()
         {
@@ -32,6 +31,18 @@ namespace CalorieTracker.Tests.Calculations
 
             sum.Calories.Should().Be(100);
             sum.Protein.Should().Be(10);
+        }
+        [Fact]
+        public void Add_DoesNotMutateOriginal()
+        {
+            var a = new NutritionValues { Calories = 100 };
+            var b = new NutritionValues { Calories = 50 };
+
+            var result = a.Add(b);
+
+            result.Should().NotBeSameAs(a);
+            a.Calories.Should().Be(100);
+            b.Calories.Should().Be(50);
         }
     }
 }

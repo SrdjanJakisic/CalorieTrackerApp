@@ -3,7 +3,7 @@ using CalorieTracker.Domain.Enums;
 
 namespace CalorieTracker.Domain.Calculations
 {
-    public class NutritionCalculator
+    public static class NutritionCalculator
     {
         public static NutritionValues ForItem(int quantity, FoodItem food)
         {

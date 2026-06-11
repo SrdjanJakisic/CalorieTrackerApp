@@ -99,12 +99,7 @@ namespace CalorieTracker.Infrastructure.Services
 
             await _userManager.AddToRoleAsync(user, "User");
 
-            var profile = new UserProfile
-            {
-                UserId = user.Id,
-                CalorieGoal = 0,
-                ProteinGoal = 0
-            };
+            var profile = new UserProfile { UserId = user.Id };
 
             await _userProfilRepo.CreateAsync(profile);
             await _unitOfWork.SaveChangesAsync();
