@@ -12,7 +12,6 @@ namespace CalorieTracker.Application.Validators.FoodItem
                 .NotEmpty().WithMessage("Назив је обавезан!")
                 .MaximumLength(100).WithMessage("Назив не може бити дужи од 100 знакова!");
             RuleFor(x => x.CategoryId).GreaterThan(0).WithMessage("категорија је обавезна!");
-            RuleFor(x => x.Unit).IsInEnum();
             RuleFor(x => x.AmountPerPiece).GreaterThan(0).When(x => x.AmountPerPiece.HasValue)
                 .WithMessage("Количина по комаду мора бити већа од 0!");
             RuleFor(x => x.AmountPerPiece).Null().When(x => x.Unit == MeasureUnit.Piece)
