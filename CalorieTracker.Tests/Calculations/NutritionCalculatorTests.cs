@@ -44,16 +44,6 @@ namespace CalorieTracker.Tests.Calculations
         }
 
         [Fact]
-        public void ForItem_PieceUnit_MultiplesByQuantityDirectly()
-        {
-            var food = CreateFood(MeasureUnit.Piece, calories: 114);
-
-            var result = NutritionCalculator.ForItem(3, food);
-
-            result.Calories.Should().Be(342);
-        }
-
-        [Fact]
         public void ForItem_ZeroQuantity_ReturnsZero()
         {
             var food = CreateFood(MeasureUnit.Gram, calories: 100);
@@ -77,6 +67,16 @@ namespace CalorieTracker.Tests.Calculations
             result.Protein.Should().Be(62);
             result.Carbs.Should().Be(0);
             result.Fat.Should().BeApproximately(7.2f, 0.01f);
+        }
+
+        [Fact]
+        public void ForItem_DecimalQuantity_IsNotTruncated()
+        {
+            var food = CreateFood(MeasureUnit.Gram, calories: 160);
+
+            var result = NutritionCalculator.ForItem(62.5f, food);
+
+            result.Calories.Should().BeApproximately(100f, 0.001f);
         }
     }
 }

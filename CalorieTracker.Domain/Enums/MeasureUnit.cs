@@ -3,7 +3,6 @@
     public enum MeasureUnit
     {
         Gram = 0,
-        Milliliter = 1,
-        Piece = 2
+        Milliliter = 1
     }
 }

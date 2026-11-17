@@ -7,7 +7,6 @@
         public int FoodItemId { get; set; }
         public int Quantity { get; set; }
         public bool IsEaten { get; set; }
-
         public Meal? Meal { get; set; }
         public FoodItem? FoodItem { get; set; }
     }

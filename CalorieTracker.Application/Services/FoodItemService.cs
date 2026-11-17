@@ -17,7 +17,6 @@ namespace CalorieTracker.Application.Services
                 Name = dto.Name,
                 Manufacturer = string.IsNullOrWhiteSpace(dto.Manufacturer) ? null : dto.Manufacturer,
                 Unit = dto.Unit,
-                AmountPerPiece = dto.AmountPerPiece,
                 Calories = dto.Calories,
                 Protein = dto.Protein,
                 Carbs = dto.Carbs,
@@ -85,7 +84,6 @@ namespace CalorieTracker.Application.Services
             item.Name = dto.Name;
             item.Manufacturer = string.IsNullOrWhiteSpace(dto.Manufacturer) ? null : dto.Manufacturer;
             item.Unit = dto.Unit;
-            item.AmountPerPiece = dto.AmountPerPiece;
             item.Calories = dto.Calories;
             item.Protein = dto.Protein;
             item.Carbs = dto.Carbs;
@@ -113,7 +111,6 @@ namespace CalorieTracker.Application.Services
                 Name = item.Name,
                 Manufacturer = item.Manufacturer,
                 Unit = item.Unit,
-                AmountPerPiece = item.AmountPerPiece,
                 Calories = item.Calories,
                 Protein = item.Protein,
                 Carbs = item.Carbs,

@@ -1,13 +1,12 @@
 ﻿using CalorieTracker.Domain.Entities;
-using CalorieTracker.Domain.Enums;
 
 namespace CalorieTracker.Domain.Calculations
 {
     public static class NutritionCalculator
     {
-        public static NutritionValues ForItem(int quantity, FoodItem food)
+        public static NutritionValues ForItem(float quantity, FoodItem food)
         {
-            var factor = food.Unit == MeasureUnit.Piece ? quantity : quantity / 100f;
+            var factor = quantity / 100f;
 
             return new NutritionValues
             {
