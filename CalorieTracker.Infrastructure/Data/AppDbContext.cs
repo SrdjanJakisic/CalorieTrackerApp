@@ -20,6 +20,7 @@ namespace CalorieTracker.Infrastructure.Data
         public DbSet<RecipeItem> RecipeItems { get; set; }
         public DbSet<RecipeImage> RecipeImages { get; set; }
         public DbSet<WeightEntry> WeightEntries { get; set; }
+        public DbSet<FoodServing> FoodServings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -109,6 +110,15 @@ namespace CalorieTracker.Infrastructure.Data
                 .WithMany()
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<FoodItem>()
+                .HasMany(x => x.Servings)
+                .WithOne(x => x.FoodItem)
+                .HasForeignKey(x => x.FoodItemId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<FoodServing>()
+                .Property(x => x.Name).HasMaxLength(50);
         }
     }
 }

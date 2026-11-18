@@ -20,6 +20,6 @@ namespace CalorieTracker.Domain.Entities
         public string? ImageUrl { get; set; }
 
         public FoodCategory? Category { get; set; }
-
+        public ICollection<FoodServing> Servings { get; set; } = new List<FoodServing>();
     }
 }

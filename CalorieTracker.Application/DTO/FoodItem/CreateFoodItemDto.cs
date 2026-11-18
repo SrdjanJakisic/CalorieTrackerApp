@@ -15,5 +15,7 @@ namespace CalorieTracker.Application.DTO.FoodItem
         public bool IsLenten { get; set; }
         public string? AdditionalInfo { get; set; }
         public string? Source { get; set; }
+
+        public List<FoodServingDto> Servings { get; set; } = new();
     }
 }
