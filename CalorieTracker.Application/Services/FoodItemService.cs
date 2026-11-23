@@ -24,7 +24,10 @@ namespace CalorieTracker.Application.Services
                 IsLenten = dto.IsLenten,
                 AdditionalInfo = dto.AdditionalInfo,
                 Source = dto.Source,
-                IsApproved = true
+                IsApproved = true,
+                Servings = dto.Servings
+                .Select((s, i) => new FoodServing { Name = s.Name.Trim(), Amount = s.Amount, SortOrder = i})
+                .ToList()
             };
 
             await _unitOfWork.FoodItems.CreateAsync(item);
@@ -92,6 +95,12 @@ namespace CalorieTracker.Application.Services
             item.IsApproved = dto.IsApproved;
             item.Source = dto.Source;
             item.AdditionalInfo = dto.AdditionalInfo;
+            item.Servings.Clear();
+            for (var i = 0; i < dto.Servings.Count; i++)
+            {
+                var serving = dto.Servings[i];
+                item.Servings.Add(new FoodServing { Name = serving.Name.Trim(), Amount = serving.Amount, SortOrder = i });
+            }
 
             await _unitOfWork.FoodItems.UpdateAsync(item);
             await _unitOfWork.SaveChangesAsync();
@@ -119,7 +128,11 @@ namespace CalorieTracker.Application.Services
                 IsApproved = item.IsApproved,
                 AdditionalInfo = item.AdditionalInfo,
                 Source = item.Source,
-                ImageUrl = item.ImageUrl
+                ImageUrl = item.ImageUrl,
+                Servings = item.Servings
+                .OrderBy(x => x.SortOrder)
+                .Select(x => new FoodServingDto { Name = x.Name, Amount = x.Amount })
+                .ToList()
             };
         }
     }

@@ -43,7 +43,10 @@ namespace CalorieTracker.Infrastructure.Repositories
             return await query.ToListAsync();
         }
         public async Task<FoodItem?> GetByIdAsync(int id) 
-            => await _db.FoodItems.Include(x => x.Category).FirstOrDefaultAsync(x => x.Id == id);
+            => await _db.FoodItems
+            .Include(x => x.Category)
+            .Include(x => x.Servings.OrderBy(s => s.SortOrder))
+            .FirstOrDefaultAsync(x => x.Id == id);
         public Task UpdateAsync(FoodItem item)
         {
             _db.FoodItems.Update(item);
