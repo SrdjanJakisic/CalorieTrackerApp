@@ -11,26 +11,26 @@ namespace CalorieTracker.Infrastructure
         public IFoodItemRepository FoodItems { get; }
         public IFoodSuggestionRepository FoodSuggestions { get; }
         public IRecipeRepository Recipes { get; }
-        public IMonthlyPlanRepository MonthlyPlans { get; }
-        public IMealItemRepository MealItems { get; }
         public IWeightEntryRepository WeightEntries { get; }
+        public IFoodLogEntryRepository FoodLogEntries { get; set; }
+        public IDayRepository Days { get; set; }
         public UnitOfWork(AppDbContext db,
             IFoodSuggestionRepository foodSuggestions,
             IFoodItemRepository foodItems,
             IFoodCategoryRepository foodCategories,
             IRecipeRepository recipes,
-            IMonthlyPlanRepository monthlyPlans,
-            IMealItemRepository mealItems,
-            IWeightEntryRepository weightEntries)
+            IWeightEntryRepository weightEntries,
+            IFoodLogEntryRepository foodLogEntries,
+            IDayRepository days)
         {
             _db = db;
             FoodCategories = foodCategories;
             FoodItems = foodItems;
             FoodSuggestions = foodSuggestions;
             Recipes = recipes;
-            MonthlyPlans = monthlyPlans;
-            MealItems = mealItems;
             WeightEntries = weightEntries;
+            Days = days;
+            FoodLogEntries = foodLogEntries;
         }
 
         public async Task<int> SaveChangesAsync()

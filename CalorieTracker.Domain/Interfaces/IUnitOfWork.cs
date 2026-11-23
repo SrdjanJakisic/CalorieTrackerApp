@@ -10,8 +10,8 @@ namespace CalorieTracker.Domain.Interfaces
         IFoodItemRepository FoodItems { get; }
         IFoodSuggestionRepository FoodSuggestions { get; }
         IRecipeRepository Recipes { get; }
-        IMonthlyPlanRepository MonthlyPlans { get; }
         IWeightEntryRepository WeightEntries { get; }
-        IMealItemRepository MealItems { get; }
+        IDayRepository Days { get; }
+        IFoodLogEntryRepository FoodLogEntries { get; }
     }
 }

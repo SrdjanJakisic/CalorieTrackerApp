@@ -3,11 +3,12 @@
     public class DayEntry
     {
         public int Id { get; set; }
-        public int MonthlyPlanId { get; set; }
+        public string UserId { get; set; } = string.Empty;
         public DateOnly Date { get; set; }
         public bool IsLenten { get; set; }
+        public bool Fasting { get; set; }
 
-        public MonthlyPlan? MonthlyPlan { get; set; }
-        public ICollection<Meal> Meals { get; set; } = new List<Meal>();
+        public ICollection<FoodLogEntry> Entries { get; set; } = new List<FoodLogEntry>();
+
     }
 }
