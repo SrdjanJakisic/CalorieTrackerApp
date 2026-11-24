@@ -1,5 +1,4 @@
 ﻿using CalorieTracker.Application.DTO.FoodSuggestion;
-using CalorieTracker.Domain.Enums;
 using FluentValidation;
 
 namespace CalorieTracker.Application.Validators.FoodSuggestion
@@ -15,6 +14,10 @@ namespace CalorieTracker.Application.Validators.FoodSuggestion
             RuleFor(x => x.Protein).GreaterThanOrEqualTo(0);
             RuleFor(x => x.Carbs).GreaterThanOrEqualTo(0);
             RuleFor(x => x.Fat).GreaterThanOrEqualTo(0);
+            RuleFor(x => x.Barcode)
+                .Matches(@"^\d{8,14}$")
+                .When(x => !string.IsNullOrEmpty(x.Barcode))
+                .WithMessage("Баркод сме да садржи само цифре (8 до 14)!");
         }
     }
 }
