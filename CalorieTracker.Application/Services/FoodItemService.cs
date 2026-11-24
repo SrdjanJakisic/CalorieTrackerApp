@@ -2,6 +2,7 @@
 using CalorieTracker.Application.Interfaces.Services;
 using CalorieTracker.Domain.Entities;
 using CalorieTracker.Domain.Interfaces;
+using System.Runtime.CompilerServices;
 
 namespace CalorieTracker.Application.Services
 {
@@ -26,8 +27,9 @@ namespace CalorieTracker.Application.Services
                 Source = dto.Source,
                 IsApproved = true,
                 Servings = dto.Servings
-                .Select((s, i) => new FoodServing { Name = s.Name.Trim(), Amount = s.Amount, SortOrder = i})
-                .ToList()
+                .Select((s, i) => new FoodServing { Name = s.Name.Trim(), Amount = s.Amount, SortOrder = i })
+                .ToList(),
+                Barcode = string.IsNullOrWhiteSpace(dto.Barcode) ? null : dto.Barcode.Trim()
             };
 
             await _unitOfWork.FoodItems.CreateAsync(item);
@@ -59,7 +61,8 @@ namespace CalorieTracker.Application.Services
                 CategoryName = item.Category?.Name ?? string.Empty,
                 Calories = item.Calories,
                 IsLenten = item.IsLenten,
-                ImageUrl = item.ImageUrl
+                ImageUrl = item.ImageUrl,
+                Barcode = item.Barcode
             });
         }
         public async Task<FoodItemDto> GetByIdAsync(int id)
@@ -101,6 +104,7 @@ namespace CalorieTracker.Application.Services
                 var serving = dto.Servings[i];
                 item.Servings.Add(new FoodServing { Name = serving.Name.Trim(), Amount = serving.Amount, SortOrder = i });
             }
+            item.Barcode = string.IsNullOrWhiteSpace(dto.Barcode) ? null : dto.Barcode.Trim();
 
             await _unitOfWork.FoodItems.UpdateAsync(item);
             await _unitOfWork.SaveChangesAsync();
@@ -132,7 +136,8 @@ namespace CalorieTracker.Application.Services
                 Servings = item.Servings
                 .OrderBy(x => x.SortOrder)
                 .Select(x => new FoodServingDto { Name = x.Name, Amount = x.Amount })
-                .ToList()
+                .ToList(),
+                Barcode = item.Barcode
             };
         }
     }

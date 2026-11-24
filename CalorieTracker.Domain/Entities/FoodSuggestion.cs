@@ -17,5 +17,6 @@ namespace CalorieTracker.Domain.Entities
         public bool IsLenten { get; set; }
         public SuggestionStatus Status { get; set; } = SuggestionStatus.Pending;
         public string? AdminNote { get; set; }
+        public string? Barcode { get; set; }
     }
 }

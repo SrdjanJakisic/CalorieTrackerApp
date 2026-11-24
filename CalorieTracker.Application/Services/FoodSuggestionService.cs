@@ -32,7 +32,8 @@ namespace CalorieTracker.Application.Services
                 Carbs = suggestion.Carbs,
                 Fat = suggestion.Fat,
                 IsLenten = suggestion.IsLenten,
-                IsApproved = true
+                IsApproved = true,
+                Barcode = suggestion.Barcode
             };
 
             await _unitOfWork.FoodItems.CreateAsync(item);
@@ -53,7 +54,8 @@ namespace CalorieTracker.Application.Services
                 Fat = dto.Fat,
                 IsLenten = dto.IsLenten,
                 Status = SuggestionStatus.Pending,
-                AdminNote = null
+                AdminNote = null,
+                Barcode = string.IsNullOrWhiteSpace(dto.Barcode) ? null : dto.Barcode.Trim()
             };
 
             await _unitOfWork.FoodSuggestions.CreateAsync(suggestion);
@@ -95,7 +97,8 @@ namespace CalorieTracker.Application.Services
                 Fat = suggestion.Fat,
                 IsLenten = suggestion.IsLenten,
                 Status = suggestion.Status,
-                AdminNote = suggestion.AdminNote
+                AdminNote = suggestion.AdminNote,
+                Barcode = suggestion.Barcode
             };
         }
     }

@@ -25,6 +25,10 @@ namespace CalorieTracker.Application.Validators.FoodItem
             RuleFor(x => x.Servings)
                 .Must(list => list == null || list.Select(s => s.Name.Trim().ToLower()).Distinct().Count() == list.Count)
                 .WithMessage("Намирница не може имати два serving-a са истим називом!");
+            RuleFor(x => x.Barcode)
+                .Matches(@"^\d{8,14}$")
+                .When(x => !string.IsNullOrEmpty(x.Barcode))
+                .WithMessage("Баркод сме да садржи само цифре (8 до 14)!");
         }
     }
 }

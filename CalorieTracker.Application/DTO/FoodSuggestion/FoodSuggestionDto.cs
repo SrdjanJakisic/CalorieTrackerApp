@@ -17,5 +17,6 @@ namespace CalorieTracker.Application.DTO.FoodSuggestion
         public bool IsLenten { get; set; }
         public SuggestionStatus Status { get; set; }
         public string? AdminNote { get; set; }
+        public string? Barcode { get; set; }
     }
 }

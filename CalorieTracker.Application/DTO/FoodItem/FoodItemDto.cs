@@ -19,6 +19,7 @@ namespace CalorieTracker.Application.DTO.FoodItem
         public string? AdditionalInfo { get; set; }
         public string? Source { get; set; }
         public string? ImageUrl { get; set; }
+        public string? Barcode { get; set; }
 
         public List<FoodServingDto> Servings { get; set; } = new();
     }

@@ -13,5 +13,6 @@ namespace CalorieTracker.Application.DTO.FoodSuggestion
         public float Carbs { get; set; }
         public float Fat { get; set; }
         public bool IsLenten { get; set; }
+        public string? Barcode { get; set; }
     }
 }

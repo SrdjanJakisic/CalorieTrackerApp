@@ -12,5 +12,6 @@ namespace CalorieTracker.Application.DTO.FoodItem
         public float Calories { get; set; }
         public bool IsLenten { get; set; }
         public string? ImageUrl { get; set; }
+        public string? Barcode { get; set; }
     }
 }
