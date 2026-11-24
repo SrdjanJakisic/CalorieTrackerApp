@@ -39,7 +39,7 @@ namespace CalorieTracker.Infrastructure.Seed
                 var lenten = row.Cell(10).GetValue<bool>();
 
                 manufacturer = string.IsNullOrWhiteSpace(manufacturer) ? null : manufacturer;
-                if (await unitOfWork.FoodItems.ExistsAsync(name, manufacturer)) continue;
+                if (!existing.Add((name, manufacturer))) continue;
 
                 if(!categoryMap.TryGetValue(categoryName, out var category))
                 {
