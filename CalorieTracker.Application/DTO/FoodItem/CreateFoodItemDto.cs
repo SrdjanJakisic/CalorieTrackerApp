@@ -6,7 +6,7 @@ namespace CalorieTracker.Application.DTO.FoodItem
     {
         public int CategoryId { get; set; }
         public string Name { get; set; } = string.Empty;
-        public string Manufacturer { get; set; } = string.Empty;
+        public string? Manufacturer { get; set; }
         public MeasureUnit Unit { get; set; }
         public float Calories { get; set; }
         public float Protein { get; set; }

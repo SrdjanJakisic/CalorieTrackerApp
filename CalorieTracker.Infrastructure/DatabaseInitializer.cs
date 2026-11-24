@@ -43,7 +43,8 @@ namespace CalorieTracker.Infrastructure
                 await userManager.AddToRoleAsync(admin, "Admin");
             }
 
-            await DataSeeder.SeedFoodDataAsync(serviceProvider);
+            var adminUser = await userManager.FindByEmailAsync(adminEmail!);
+            await DataSeeder.SeedFoodDataAsync(serviceProvider, adminUser!.Id);
         }
     }
 }

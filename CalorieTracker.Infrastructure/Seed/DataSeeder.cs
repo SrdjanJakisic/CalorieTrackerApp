@@ -8,7 +8,7 @@ namespace CalorieTracker.Infrastructure.Seed
 {
     public class DataSeeder
     {
-        public static async Task SeedFoodDataAsync(IServiceProvider serviceProvider)
+        public static async Task SeedFoodDataAsync(IServiceProvider serviceProvider, string ownerUserId)
         {
             using var scope = serviceProvider.CreateScope();
             var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
@@ -23,6 +23,9 @@ namespace CalorieTracker.Infrastructure.Seed
             int seeded = 0;
             var categoryList = await unitOfWork.FoodCategories.GetAllAsync();
             var categoryMap = categoryList.ToDictionary(x => x.Name, x => x);
+
+            var existing = (await unitOfWork.FoodItems.GetAllAsync(null, null, null, null))
+                .Select(x => (x.Name, x.Manufacturer)).ToHashSet();
 
             foreach (var row in sheet.RowsUsed().Skip(1))
             {
@@ -56,7 +59,8 @@ namespace CalorieTracker.Infrastructure.Seed
                     Carbs = carbs,
                     Fat = fat,
                     IsApproved = true,
-                    IsLenten = lenten
+                    IsLenten = lenten,
+                    UserId = ownerUserId
                 };
 
                 await unitOfWork.FoodItems.CreateAsync(item);

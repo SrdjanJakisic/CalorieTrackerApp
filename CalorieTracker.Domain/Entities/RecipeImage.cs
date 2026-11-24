@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public int RecipeId { get; set; }
-        public string ImageUrl { get; set; } = String.Empty;
+        public string ImageUrl { get; set; } = string.Empty;
 
         public Recipe? Recipe { get; set; }
     }
